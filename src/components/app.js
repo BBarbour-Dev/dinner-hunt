@@ -1,29 +1,33 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
+import styled from 'styled-components'
+import { HuntContext } from '../context/context'
+
 import Header from './header'
 import Search from './search'
 import Recipes from './recipes'
+import PugLoader from './pugloader'
+import Error from './error'
 
 const App = () => {
-  const [recipes, setRecipes] = useState(null)
-  const [cursor, setCursor] = useState(10)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [limit, setLimit] = useState(10)
+  const { error, recipes, loading } = useContext(HuntContext)
   return (
-    <div>
+    <Container>
       <Header />
-      <Search
-        currentRecipes={[recipes, setRecipes]}
-        currentCursor={[cursor, setCursor]}
-        showLoading={[loading, setLoading]}
-        fetchError={[error, setError]}
-        currentLimit={[limit, setLimit]}
-      />
-      {error ? <div>Ut oh, something went wrong</div> : null}
-      {loading ? <div>Loading...</div> : null}
-      {recipes ? <Recipes currentRecipes={[recipes, setRecipes]} /> : null}
-    </div>
+      <Search />
+      <PugLoader loading={loading} />
+      <Error error={error} />
+      <Recipes recipes={recipes} />
+    </Container>
   )
 }
 
 export default App
+
+const Container = styled.div`
+  width: 50%;
+  margin: 0 auto;
+  font-size: 1.6rem;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`

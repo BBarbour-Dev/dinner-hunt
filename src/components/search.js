@@ -1,38 +1,24 @@
-import React, { useState } from 'react'
-
-// const appId = 'bc5a05a8'
-// const apiKey = 'fdd34a357e2699135a7660545f58ead3'
+import React, { useContext, useState } from 'react'
+import { HuntContext } from '../context/context'
 
 const appId = process.env.REACT_APP_API_ID
 const apiKey = process.env.REACT_APP_API_KEY
 
-const Search = ({
-  currentRecipes,
-  currentCursor,
-  showLoading,
-  fetchError,
-  currentLimit
-}) => {
-  const [recipes, setRecipes] = currentRecipes
-  const [cursor, setCursor] = currentCursor
-  const [loading, setLoading] = showLoading
-  const [error, setError] = fetchError
-  const [limit, setLimit] = currentLimit
+const Search = () => {
+  const { setRecipes, setLoading, setError } = useContext(HuntContext)
   const [search, setSearch] = useState('')
   const onSubmit = async e => {
     e.preventDefault()
-    setCursor(10)
     getRecipes()
   }
   const getRecipes = async () => {
     setLoading(true)
     const getUrl = `https://api.edamam.com/search?q=${search}&app_id=${appId}&app_key=
-    ${apiKey}&from=${cursor - 10}&to=${cursor}`
+    ${apiKey}&from=0&to=100`
     try {
       const response = await fetch(getUrl)
       const data = await response.json()
       setRecipes(data.hits)
-      setLimit(data.count)
       setLoading(false)
     } catch (err) {
       setError(true)
