@@ -1,11 +1,21 @@
 import React from 'react'
+import styled from 'styled-components'
 
 const Error = ({ error }) => {
   return error ? (
-    <div>
-      <h2 style={{ color: 'red' }}>Ut oh, something went wrong</h2>
-    </div>
+    <ErrorStyle>
+      <h2>
+        Ut oh, something went wrong.{' '}
+        <span role="img" aria-label="cold-sweat">
+          😅
+        </span>
+      </h2>
+    </ErrorStyle>
   ) : null
 }
+
+const ErrorStyle = styled.div`
+  color: #bc340f;
+`
 
 export default Error

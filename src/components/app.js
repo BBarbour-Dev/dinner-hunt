@@ -14,9 +14,11 @@ const App = () => {
     <Container>
       <Header />
       <Search />
-      <PugLoader loading={loading} />
-      <Error error={error} />
-      <Recipes recipes={recipes} />
+      <Main>
+        <Error error={error} />
+        <PugLoader loading={loading} />
+        <Recipes recipes={recipes} />
+      </Main>
     </Container>
   )
 }
@@ -24,10 +26,17 @@ const App = () => {
 export default App
 
 const Container = styled.div`
-  width: 50%;
-  margin: 0 auto;
-  font-size: 1.6rem;
-  @media (max-width: 768px) {
-    width: 100%;
+  background: #fafafa;
+  color: #212121;
+  min-height: 100vh;
+`
+
+const Main = styled.main`
+  padding: 2rem;
+
+  @media (min-width: 700px) {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
   }
 `
